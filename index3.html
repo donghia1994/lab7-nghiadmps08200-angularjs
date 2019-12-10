@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./angular-1.7.8/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" ng-app="myApp">
+        <div ng-controller="myCtrl">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    DANH SÁCH HÀNG HÓA
+                </div>
+
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>SẢN PHẨM</th>
+                            <th>ĐƠN GIÁ</th>
+                            <th>GIẢM GIÁ</th>
+                            <th>NGÀY</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="p in product|orderBy:'-price'|limitTo:8:16">
+                            <td>{{p.name|uppercase}}</td>
+                            <td>{{p.price|currency}}</td>
+                            <td>{{p.discount|percentage:2}}</td>
+                            <td>{{p.date|date:"dd-MMMM, yyyy"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="./Lab7-TaiNguyen/Prods.js"></script>
+<script>
+    var app = angular.module("myApp", []);
+    app.controller("myCtrl", function($scope){
+        $scope.product = list;
+    })
+    app.filter('percentage', function($filter){
+        return function(input, decimals){
+            return $filter('number')(input * 100, decimals) + '%';
+        };
+    })
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>
